@@ -34,7 +34,7 @@ function OptInOut() {
       // Student view: find student by email and load schedules
       api.get('/students')
         .then(res => {
-          const matchedStudent = res.data.find(student => student.email === user.email);
+          const matchedStudent = res.data.find(student => student.user_id === user.id);
           if (matchedStudent) {
             setStudentId(matchedStudent.id);
             setSelectedStudent(matchedStudent);

@@ -5,7 +5,7 @@ export default function CourseCRUD() {
   const [form, setForm] = useState({ name: '', description: '', duration: '' });
   const [courses, setCourses] = useState([]);
   const [error, setError] = useState('');
-  const [editId, setEditId] = useState(null); // Track which course is being edited
+  const [editId, setEditId] = useState(null);
 
   useEffect(() => {
     api.get('/courses')
@@ -29,12 +29,15 @@ export default function CourseCRUD() {
     try {
       if (editId === null) {
         // Create new course
-        const res = await api.post('/courses', form);
-        setCourses(prev => [...prev, res.data]);
+        await api.post('/courses', form);
+        // Fetch updated courses list
+        const res = await api.get('/courses');
+        setCourses(res.data);
       } else {
         // Update existing course
-        const res = await api.put(`/courses/${editId}`, form);
-        setCourses(prev => prev.map(c => (c.id === editId ? res.data : c)));
+        await api.put(`/courses/${editId}`, form);
+        const res = await api.get('/courses');
+        setCourses(res.data);
       }
       resetForm();
     } catch {
@@ -46,7 +49,6 @@ export default function CourseCRUD() {
     try {
       await api.delete(`/courses/${id}`);
       setCourses(prev => prev.filter(c => c.id !== id));
-      // If you delete a course that's being edited, reset form
       if (editId === id) resetForm();
     } catch {
       setError('Failed to delete course');
@@ -78,7 +80,7 @@ export default function CourseCRUD() {
             onChange={handleChange}
             required
             className="mt-1 w-full px-3 py-2 border rounded focus:ring-2 focus:ring-blue-400"
-            placeholder="Course name"
+            placeholder="e.g. React Basics"
           />
         </label>
         <label className="font-semibold">
@@ -88,7 +90,7 @@ export default function CourseCRUD() {
             value={form.description}
             onChange={handleChange}
             className="mt-1 w-full px-3 py-2 border rounded"
-            placeholder="Short description"
+            placeholder="e.g. Learn fundamentals of React.js"
           />
         </label>
         <label className="font-semibold">

@@ -14,7 +14,7 @@ useEffect(() => {
     (async () => {
       try {
         await getCsrfCookie();
-        const res = await api.get('/me'); // Assumes /me returns user info if token is valid
+        const res = await api.get('/me');
         setUser(res.data);
       } catch {
         setUser(null);

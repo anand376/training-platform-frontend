@@ -149,7 +149,7 @@ function StudentCRUD() {
           User Name
           <input
             name="name"
-            placeholder="User full name"
+            placeholder="e.g. John Doe"
             value={form.name}
             onChange={handleChange}
             required
@@ -161,7 +161,7 @@ function StudentCRUD() {
           First Name
           <input
             name="first_name"
-            placeholder="First Name"
+            placeholder="e.g. John"
             value={form.first_name}
             onChange={handleChange}
             required
@@ -173,7 +173,7 @@ function StudentCRUD() {
           Last Name
           <input
             name="last_name"
-            placeholder="Last Name"
+            placeholder="e.g. Doe"
             value={form.last_name}
             onChange={handleChange}
             required
@@ -186,7 +186,7 @@ function StudentCRUD() {
           <input
             name="email"
             type="email"
-            placeholder="Email"
+            placeholder="e.g. john@example.com"
             value={form.email}
             onChange={handleChange}
             required
@@ -199,7 +199,7 @@ function StudentCRUD() {
           <input
             name="password"
             type="password"
-            placeholder="Password"
+            placeholder="e.g. StrongPassword123"
             value={form.password}
             onChange={handleChange}
             required
@@ -212,7 +212,7 @@ function StudentCRUD() {
           <input
             name="password_confirmation"
             type="password"
-            placeholder="Confirm Password"
+            placeholder="Re-enter password"
             value={form.password_confirmation}
             onChange={handleChange}
             required
@@ -224,9 +224,12 @@ function StudentCRUD() {
           Phone
           <input
             name="phone"
-            placeholder="Phone"
+            placeholder="e.g. 9876543210"
             value={form.phone}
             onChange={handleChange}
+            maxLength={10}
+            pattern="\d{10}"
+            title="Phone number must be 10 digits"
             className="mt-1 w-full px-3 py-2 border rounded"
           />
         </label>
